@@ -1,5 +1,5 @@
 "use client";
-import { ReactEventHandler } from "react";
+import { useState } from "react";
 import bannedBooksData from "../../public/banned-book-data.json";
 
 type Book = {
@@ -8,6 +8,8 @@ type Book = {
 };
 
 export default function Home() {
+	const [extendedCountry, setExtendedCountry] = useState<string | null>(null);
+
 	const colorIntensity = (
 		length: number,
 		minLength: number = 1,
@@ -20,9 +22,10 @@ export default function Home() {
 		return `rgb(${internsity}, 0, 0)`;
 	};
 
-	const handleDisplayBannedBook = (e: any) => {
-		e.preventDefault();
-		console.log("Display banned books");
+	const handleDisplayBannedBook = (country: string) => {
+		setExtendedCountry((prevCountry) =>
+			prevCountry === country ? null : country
+		);
 	};
 
 	return (
@@ -30,17 +33,27 @@ export default function Home() {
 			<h1 className="text-white uppercase text-6xl ml-12 mt-12">
 				Banned Books
 			</h1>
-			<ul className="ml-12">
+			<ul className="ml-12 w-1/2">
 				{Object.entries(bannedBooksData).map(([country, books]) => (
 					<li key={country}>
 						<a
 							href="#"
-							onClick={handleDisplayBannedBook}
+							onClick={() => handleDisplayBannedBook(country)}
 							className={`transform duration-200 hover:text-red-500 text-white`}
 							// style={{ color: colorIntensity(books.length) }}
 						>
 							{country} ({books.length})
 						</a>
+						{extendedCountry === country && (
+							<ul className="flex flex-col">
+								{books.map((book: Book) => (
+									<li key={book.title} className="text-white">
+										<span className="text-red-500">{book.title} </span>- (
+										{book.note})
+									</li>
+								))}
+							</ul>
+						)}
 					</li>
 				))}
 			</ul>

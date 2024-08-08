@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 const bitRoad = localFont({
 	src: "../../public/fonts/BitroaddemoRegular-rvrDA.otf",
 });
+const pixeboy = localFont({ src: "../../public/fonts/Pixeboy-z8XGD.ttf" });
+
+const bookerly = localFont({ src: "../../public/fonts/Bookerly.ttf" });
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -20,7 +23,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={bitRoad.className}>{children}</body>
+			<body className={pixeboy.className}>{children}</body>
 		</html>
 	);
 }
